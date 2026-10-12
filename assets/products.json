@@ -1,0 +1,226 @@
+[
+  {
+    "slug": "aluminium-coil",
+    "name": "Aluminium Coil",
+    "category": "Aluminium Products",
+    "description": "Type : Aluminium Coils · Grade : AA 1100 to 6000 Series · Thickness : 0.50mm to 4.00mm · Size : 1220 mm to 2000mm Width",
+    "image": "assets/products/aluminium-coil.jpg"
+  },
+  {
+    "slug": "half-pipes",
+    "name": "Half Pipes",
+    "category": "Heavy Thickness Pipes",
+    "description": "Half Pipes",
+    "image": "assets/products/half-pipes.jpg"
+  },
+  {
+    "slug": "small-dia-and-heavy-thickness-pipes",
+    "name": "Small Dia  Heavy Thickness Pipes",
+    "category": "Heavy Thickness Pipes",
+    "description": "Thickness upto 100mm",
+    "image": "assets/products/small-dia-and-heavy-thickness-pipes.jpg"
+  },
+  {
+    "slug": "special-size-and-thick-pipe",
+    "name": "Heavy Thickness Pipes",
+    "category": "Heavy Thickness Pipes",
+    "description": "Nominal Diamter : 76mm – 1020mm Wall Thickness: 2.5mm – 25mm",
+    "image": "assets/products/special-size-and-thick-pipe.jpg"
+  },
+  {
+    "slug": "hexagonal-tube",
+    "name": "Hexagonal Tube",
+    "category": "Special shape Products",
+    "description": "Hexagonal shape steel comes in a variety of sizes, and normally specified by width across the flat of hexagon.it is normally cold worked materials",
+    "image": "assets/products/hexagonal-tube.jpg"
+  },
+  {
+    "slug": "oval-tube",
+    "name": "Oval Tube",
+    "category": "Special shape Products",
+    "description": "Oval steel tube design is aesthetically pleasing for applications in structural and architectural including fitness equipment.",
+    "image": "assets/products/oval-tube.jpg"
+  },
+  {
+    "slug": "elliptical-tube",
+    "name": "Elliptical tube",
+    "category": "Special shape Products",
+    "description": "Size Range 120x60x3.2mm to 500x250x16mm thickness",
+    "image": "assets/products/elliptical-tube.jpg"
+  },
+  {
+    "slug": "special-pipes",
+    "name": "Special pipes",
+    "category": "Special shape Products",
+    "description": "Elliptical tubes, Semi-circle tubes, Arch tubes, Triangle tubes, Hexagon tubes and other Cross section tubes",
+    "image": "assets/products/special-pipes.jpg"
+  },
+  {
+    "slug": "conical-pipes",
+    "name": "Conical Pipes",
+    "category": "Heavy Thickness Pipes",
+    "description": "Conical Pipes / Tapered Pipes",
+    "image": "assets/products/conical-pipes.jpg"
+  },
+  {
+    "slug": "aluminium-sheets",
+    "name": "Aluminium Sheets",
+    "category": "Aluminium Products",
+    "description": "Type : Aluminium Sheets · Grade : Alloy AA 1100 H 14 Temper · Thickness : 0.50mm to 30.00mm · Size : 1220 x 2440 or customized",
+    "image": "assets/products/aluminium-sheets.jpg"
+  },
+  {
+    "slug": "gi-gratings",
+    "name": "GI Gratings",
+    "category": "GI Products",
+    "description": "Type : GI Gratings · Pannel Size : 1M x 6M or customized · Pitch Size : 30 x 100 mm /40 x 100mm · Load Bearing Bar : 20 x 3mm to 40 x 15mm",
+    "image": "assets/products/gi-gratings.jpg"
+  },
+  {
+    "slug": "hot-dipped-gi-sheet",
+    "name": "Hot Dipped GI Sheet",
+    "category": "GI Products",
+    "description": "Type : Hot Dipped GI Sheet · Coating : 120 to 275 gram · Thickness : 0.40mm to 3.80mm · Size : 1220 x 2440,1500mm Width X · Customised Length",
+    "image": "assets/products/hot-dipped-gi-sheet.jpg"
+  },
+  {
+    "slug": "hot-dipped-gi-coils",
+    "name": "Hot Dipped GI Coils",
+    "category": "GI Products",
+    "description": "Type : Hot Dipped GI Coils · Coating : 120 to 275 gram · Thickness : 0.40mm to 3.80mm · Size : 1219 or customized",
+    "image": "assets/products/hot-dipped-gi-coils.jpg"
+  },
+  {
+    "slug": "hot-dipped-gi-pipe",
+    "name": "Hot Dipped GI Pipe",
+    "category": "GI Products",
+    "description": "Type : Hot Dipped GI Pipe · Coating : 120 to 275 gram · Thickness : 1.50mm to 7.11mm · Size : 1/2” to 6” OD",
+    "image": "assets/products/hot-dipped-gi-pipe.jpg"
+  },
+  {
+    "slug": "stainless-steel-pipe",
+    "name": "Stainless Steel Pipe",
+    "category": "Stainless Steel",
+    "description": "Type : Stainless Steel Pipe · Grade : 304, 304L, 316 and 316L · Finishes : 2B to No.8 (Mirror Finish) · Thickness : 1.50mm to 10.00mm · Size : 1/2” to 30” NB",
+    "image": "assets/products/stainless-steel-pipe.jpg"
+  },
+  {
+    "slug": "stainless-steel-sheet",
+    "name": "Stainless Steel Sheet",
+    "category": "Stainless Steel",
+    "description": "Type : Stainless Steel Sheet · Grade : 304, 304L, 316 and 316L · Finishes : 2B to No.8 (Mirror Finish) Thickness: 0.30mm to 20.00mm Size: 1220 x 2440 or customized",
+    "image": "assets/products/stainless-steel-sheet.jpg"
+  },
+  {
+    "slug": "seamless-pipes",
+    "name": "Seamless Pipes",
+    "category": "MS Products",
+    "description": "Type : Seamless Pipes · Standard : API / ASTM · Size : 1/2” to 60” · Length : 6M / 12M or customized",
+    "image": "assets/products/seamless-pipes.jpg"
+  },
+  {
+    "slug": "ms-erw-saw-lsaw-pipes",
+    "name": "MS ERW/SAW/LSAW Pipes",
+    "category": "MS Products",
+    "description": "Type : MS ERW/SAW/LSAW Pipes · Standard : API / ASTM · Size : 1/2” to 60” · Length : 6M/12M or customized",
+    "image": "assets/products/ms-erw-saw-lsaw-pipes.jpg"
+  },
+  {
+    "slug": "hollow-sections",
+    "name": "Hollow Sections",
+    "category": "MS Products",
+    "description": "Type : Hollow Sections · Standard : S275,S355 and SS400 · Size : 25 x 25 to 800 x 600mm · Thickness : 1.50mm to 35mm",
+    "image": "assets/products/hollow-sections.jpg"
+  },
+  {
+    "slug": "parallel-flange-channel",
+    "name": "Parallel Flange Channel",
+    "category": "MS Products",
+    "description": "Type : Parallel Flange Channel · Standard : S235, S275, S355, SS400 · Size : 100 x 50 x 10 to 430 x 100 x 64mm",
+    "image": "assets/products/parallel-flange-channel.jpg"
+  },
+  {
+    "slug": "u-channel-upn",
+    "name": "U Channel / UPN",
+    "category": "MS Products",
+    "description": "Type : U Channel / UPN · Standard : S235, S275,S355 and SS400 · Size UPN : 80 x 45 to 400 x 110 · Size Channel : 76 x 38 to 381 x 102",
+    "image": "assets/products/u-channel-upn.jpg"
+  },
+  {
+    "slug": "h-beam-hea-and-heb",
+    "name": "H Beam &#8211; HEA and HEB",
+    "category": "MS Products",
+    "description": "Type : H Beam – HEA and HEB · Standard : S235, S275, S355 and SS400 · Size HEA : 96 x 100 to 990 x 300mm · Size HEB : 100 x 100 to 1000 x 300mm",
+    "image": "assets/products/h-beam-hea-and-heb.jpg"
+  },
+  {
+    "slug": "i-beams",
+    "name": "I Beams",
+    "category": "MS Products",
+    "description": "Type : I Beams · Standard : S235, S275, S355 and SS400 · Size : 100 x 50 to 750 x 210mm",
+    "image": "assets/products/i-beams.jpg"
+  },
+  {
+    "slug": "jis-beams",
+    "name": "JIS Beams",
+    "category": "MS Products",
+    "description": "Type : JIS Beams · Standard : S235, S275,S355 and SS400 · Size : 100 x 50 to 900 x 300mm",
+    "image": "assets/products/jis-beams.jpg"
+  },
+  {
+    "slug": "universal-columns",
+    "name": "Universal Columns",
+    "category": "MS Products",
+    "description": "Type : Universal Columns · Standard : S275 and S355 · Size : 152 x 152 to 356 x 406mm",
+    "image": "assets/products/universal-columns.jpg"
+  },
+  {
+    "slug": "universal-beams",
+    "name": "Universal Beams",
+    "category": "MS Products",
+    "description": "Type : Universal Beams · Standard : S275 and S355 · Size : 127 x 76 to 1016 x 305mm",
+    "image": "assets/products/universal-beams.jpg"
+  },
+  {
+    "slug": "mild-steel-flat-bar",
+    "name": "Mild Steel Flat Bar",
+    "category": "MS Products",
+    "description": "Type : Mild Steel Flat Bar · Coating : S235, S275, S355, SS400 · Thickness : 3.00mm to 150.00mm · Size : 20mm to 2000mm",
+    "image": "assets/products/mild-steel-flat-bar.jpg"
+  },
+  {
+    "slug": "mild-steel-angles",
+    "name": "Mild Steel Angles",
+    "category": "MS Products",
+    "description": "Type : Mild Steel Angles · Coating : S235, S275, S355,SS400 · Thickness : 2.00mm to 25.00mm · Size : 25 x 25 to 250 x 250 or customized",
+    "image": "assets/products/mild-steel-angles.jpg"
+  },
+  {
+    "slug": "ms-round-bar",
+    "name": "Mild Steel Round Bar",
+    "category": "MS Products",
+    "description": "Type : Mild Steel Round Bar · Standard : S275, S355, SS400 · Thickness : 10mm to 1500mm · Size : 6M / 12M or customized",
+    "image": "assets/products/ms-round-bar.jpg"
+  },
+  {
+    "slug": "mild-steel-sheets",
+    "name": "Mild Steel Sheets",
+    "category": "MS Products",
+    "description": "Type : Mild Steel Sheets · Standard : A36, S275, S355 and SS400 · Thickness : 1.50mm to 150mm · Size : 1220 x 2440 or customized",
+    "image": "assets/products/mild-steel-sheets.jpg"
+  },
+  {
+    "slug": "ms-coils",
+    "name": "Mild Steel Coils",
+    "category": "MS Products",
+    "description": "Type : Mild Steel Coils · Standard : S275, S355, SS400 · Thickness : 1.50mm to 16.00mm · Size : 1219,1500 & 2000",
+    "image": "assets/products/ms-coils.jpg"
+  },
+  {
+    "slug": "mild-steel-plate",
+    "name": "Mild Steel Plate",
+    "category": "MS Products",
+    "description": "Type : Mild Steel Plate · Standard : A36, S275, S355 and SS400 · Thickness : 4mm to 100mm · Size : 1.5 x 6, 2 x 6, 2.5 x 12, 3.05 x 12",
+    "image": "assets/products/mild-steel-plate.jpg"
+  }
+]
