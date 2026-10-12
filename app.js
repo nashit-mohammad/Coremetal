@@ -491,6 +491,7 @@ function contactPage() {
           <a class="contact-channel" href="#contact-form"><span class="contact-icon">${icon("mail")}</span><span><small>DROP US AN EMAIL</small><strong>${companyEmail}</strong></span><span class="contact-channel-arrow">${icon("arrowUp")}</span></a>
           <div class="contact-address"><span class="contact-icon">${icon("building")}</span><span><small>COME SAY HELLO</small><strong>Core Metal L.L.C.</strong><span>P.O. Box 95801<br>Sharjah, United Arab Emirates</span></span></div>
           <p class="contact-hours">ISO 9001:2015 certified company · serving customers across the UAE and GCC</p>
+          <a class="text-action" href="staff.html">Core Metal team sign in ${icon("arrowUp")}</a>
         </div>
         <form class="contact-form" id="contact-form">
           <div class="contact-form-heading">${eyebrow("SEND AN ENQUIRY")}<h2>How can we help?</h2><p>Fill in the details below to send your enquiry securely to our team.</p></div>
