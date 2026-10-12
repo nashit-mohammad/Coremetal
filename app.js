@@ -1,5 +1,6 @@
 const companyEmail = "mail@coremetal.net";
 const companyPhone = "+97165013111";
+const submissionEndpoint = window.COREMETAL_CONFIG?.supabaseFunctionUrl ?? "";
 const page = document.querySelector("#site")?.dataset.page ?? "home";
 const pages = [
   {id: "home", label: "Home", href: "index.html"},
@@ -101,7 +102,7 @@ function header() {
         <div class="utility-right">
           <span>${icon("globe")} Sharjah, UAE</span>
           <a href="tel:${companyPhone}">${icon("phone")} +971 6 5013 111</a>
-          <a class="utility-email" href="mailto:${companyEmail}">${icon("mail")} Email our team</a>
+          <a class="utility-email" href="contact.html">${icon("mail")} Email our team</a>
         </div>
       </div>
     </div>
@@ -134,7 +135,7 @@ function footer() {
       <div class="container footer-main">
         <div class="footer-brand"><a class="brand brand-inverse" href="index.html"><span class="brand-icon" aria-hidden="true"><span></span><span></span><span></span></span><span class="brand-name">core<span>metal</span><small>L.L.C. · SHARJAH</small></span></a><p>A reliable supply partner for structural steel, pipes and metal products in the UAE and beyond.</p><span class="certification">${icon("shield")} ISO 9001:2015 certified company</span></div>
         <div class="footer-column"><span class="footer-title">Explore</span><a href="about.html">About Core Metal</a><a href="products.html">Steel products</a><a href="specifications.html">Specifications</a><a href="industries.html">Industries we serve</a></div>
-        <div class="footer-column"><span class="footer-title">Get in touch</span><a href="contact.html">Contact our team</a><a href="careers.html">Careers</a><a href="mailto:${companyEmail}">${companyEmail}</a><a href="tel:${companyPhone}">+971 6 5013 111</a></div>
+        <div class="footer-column"><span class="footer-title">Get in touch</span><a href="contact.html">Contact our team</a><a href="careers.html">Careers</a><a href="contact.html">${companyEmail}</a><a href="tel:${companyPhone}">+971 6 5013 111</a></div>
         <div class="footer-column footer-location"><span class="footer-title">Visit us</span><span>Core Metal L.L.C.</span><span>P.O. Box 95801</span><span>Sharjah, United Arab Emirates</span><a href="quote.html" class="footer-quote">Start an enquiry ${icon("arrowUp")}</a></div>
       </div>
       <div class="container footer-bottom"><span>© ${new Date().getFullYear()} Core Metal L.L.C. All rights reserved.</span><a href="privacy.html">Privacy</a><span>Built on trust. Forged to last.</span></div>
@@ -347,7 +348,7 @@ function productsPage(products) {
     <section class="section section-catalog">
       <div class="container">
         <div class="catalog-topline"><span class="catalog-count">${products.length} product groups to explore</span><a class="text-action" href="specifications.html">Need the specs? ${icon("arrow")}</a></div>
-        <form class="catalog-search" role="search" onsubmit="return false">
+        <form class="catalog-search" role="search">
           ${icon("layers")}<label class="visually-hidden" for="product-search">Search products</label><input type="search" id="product-search" placeholder="Search by product, material or size…" autocomplete="off"><span class="search-shortcut">⌕</span>
         </form>
         <div class="catalog-filters" role="group" aria-label="Filter products by material"><button type="button" class="filter-chip is-selected" data-category="all">All products <span>${products.length}</span></button>${[...new Set(products.map(item => item.category))].sort().map(category => `<button type="button" class="filter-chip" data-category="${escapeHtml(category)}">${escapeHtml(category)}</button>`).join("")}</div>
@@ -470,8 +471,8 @@ function careersPage() {
       description: "We value people who bring care, integrity and a collaborative spirit to their work.",
     })}
     <section class="section section-careers"><div class="container careers-grid">
-      <div class="careers-message"><span class="careers-icon">${icon("briefcase")}</span>${eyebrow("CAREERS AT CORE METAL")}<h2>Build your next chapter with us.</h2><p>Core Metal serves customers from Sharjah across the UAE and GCC. We believe the way we work as a team matters just as much as the products we supply.</p><p>We do not currently publish open positions on this website. If you’d like us to keep your details in mind for future opportunities, introduce yourself to our team.</p><a class="button button-dark" href="mailto:${companyEmail}?subject=Career%20enquiry%20%E2%80%94%20Core%20Metal">Introduce yourself ${icon("arrowUp")}</a></div>
-      <aside class="careers-panel"><span class="eyebrow eyebrow-light">SAY HELLO</span><h3>Interested in joining the team?</h3><p>Tell us a little about yourself, the kind of role you’re interested in and what you’d bring to the team. Feel free to include your CV.</p><a href="mailto:${companyEmail}?subject=Career%20enquiry%20%E2%80%94%20Core%20Metal">${icon("mail")} ${companyEmail} ${icon("arrowUp", "career-mail-arrow")}</a><span class="careers-response">Our team will review your message as soon as possible.</span></aside>
+      <div class="careers-message"><span class="careers-icon">${icon("briefcase")}</span>${eyebrow("CAREERS AT CORE METAL")}<h2>Build your next chapter with us.</h2><p>Core Metal serves customers from Sharjah across the UAE and GCC. We believe the way we work as a team matters just as much as the products we supply.</p><p>We do not currently publish open positions on this website. If you’d like us to keep your details in mind for future opportunities, introduce yourself to our team.</p><a class="button button-dark" href="contact.html?subject=Careers">Introduce yourself ${icon("arrowUp")}</a></div>
+      <aside class="careers-panel"><span class="eyebrow eyebrow-light">SAY HELLO</span><h3>Interested in joining the team?</h3><p>Tell us a little about yourself and the kind of role you’re interested in. We’ll pass your message along to the right people.</p><a href="contact.html?subject=Careers">${icon("mail")} Contact our team ${icon("arrowUp", "career-mail-arrow")}</a><span class="careers-response">Your career enquiry will go straight to our team.</span></aside>
     </div></section>
   `;
 }
@@ -487,18 +488,20 @@ function contactPage() {
       <div class="container contact-grid">
         <div class="contact-details">${eyebrow("HERE WHEN YOU NEED US")}<h2>A real conversation is a good place to start.</h2><p>Reach us directly using the contact details below, or send your enquiry and we’ll get back to you.</p>
           <a class="contact-channel" href="tel:${companyPhone}"><span class="contact-icon">${icon("phone")}</span><span><small>GIVE US A CALL</small><strong>+971 6 5013 111</strong></span><span class="contact-channel-arrow">${icon("arrowUp")}</span></a>
-          <a class="contact-channel" href="mailto:${companyEmail}"><span class="contact-icon">${icon("mail")}</span><span><small>DROP US AN EMAIL</small><strong>${companyEmail}</strong></span><span class="contact-channel-arrow">${icon("arrowUp")}</span></a>
+          <a class="contact-channel" href="#contact-form"><span class="contact-icon">${icon("mail")}</span><span><small>DROP US AN EMAIL</small><strong>${companyEmail}</strong></span><span class="contact-channel-arrow">${icon("arrowUp")}</span></a>
           <div class="contact-address"><span class="contact-icon">${icon("building")}</span><span><small>COME SAY HELLO</small><strong>Core Metal L.L.C.</strong><span>P.O. Box 95801<br>Sharjah, United Arab Emirates</span></span></div>
           <p class="contact-hours">ISO 9001:2015 certified company · serving customers across the UAE and GCC</p>
         </div>
         <form class="contact-form" id="contact-form">
-          <div class="contact-form-heading">${eyebrow("SEND AN ENQUIRY")}<h2>How can we help?</h2><p>Fill in the details below. Your email program will open with your enquiry ready to send.</p></div>
+          <div class="contact-form-heading">${eyebrow("SEND AN ENQUIRY")}<h2>How can we help?</h2><p>Fill in the details below to send your enquiry securely to our team.</p></div>
+          <label class="honeypot-control" aria-hidden="true">Leave this field blank<input name="website_url" type="text" tabindex="-1" autocomplete="off"></label>
           <label for="contact-name">Your name <span aria-hidden="true">*</span><input id="contact-name" name="name" autocomplete="name" required placeholder="e.g. Samir Ahmed"></label>
           <div class="form-row"><label for="contact-email">Work email <span aria-hidden="true">*</span><input id="contact-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></label><label for="contact-phone">Phone <span class="optional-label">(optional)</span><input id="contact-phone" name="phone" type="tel" autocomplete="tel" placeholder="+971"></label></div>
-          <label for="contact-subject">What is this about? <span aria-hidden="true">*</span><select id="contact-subject" name="subject" required><option value="" disabled selected>Choose an enquiry type</option><option>Products or availability</option><option>Specifications and grades</option><option>Quotation or project enquiry</option><option>Careers</option><option>Something else</option></select></label>
+          <label for="contact-subject">What is this about? <span aria-hidden="true">*</span><select id="contact-subject" name="subject" required><option value="" disabled selected>Choose an enquiry type</option><option>Products or availability</option><option>Specifications and grades</option><option>Quotation or project enquiry</option><option>Careers</option><option>Privacy or data request</option><option>Something else</option></select></label>
           <label for="contact-message">A little more about what you need <span aria-hidden="true">*</span><textarea id="contact-message" name="message" rows="5" required placeholder="Products, sizes, quantities, project location — include whatever details you have."></textarea></label>
-          <button class="button button-dark form-submit" type="submit">Prepare your enquiry ${icon("arrowUp")}</button>
-          <p class="form-privacy">Your enquiry will be prepared in your email program. We don't submit it to a third-party form service.</p>
+          <div class="consent-row"><label class="consent-control"><input name="consent" type="checkbox" required><span>I agree that Core Metal may use my details to respond to this enquiry.</span></label><a class="consent-privacy" href="privacy.html">Privacy details</a></div>
+          <button class="button button-dark form-submit" type="submit">Send your enquiry ${icon("arrowUp")}</button>
+          <p class="form-privacy">Your details are sent securely to Core Metal’s enquiry database so our team can respond.</p>
           <p class="form-feedback" id="contact-feedback" aria-live="polite"></p>
         </form>
       </div>
@@ -520,7 +523,7 @@ function quotePage(products) {
             ? `<div class="quote-items">${quote.map(item => {
               const product = products.find(entry => entry.slug === item.slug);
               if (!product) return "";
-              return `<article class="quote-item"><div class="quote-item-image">${imageTag(product.image, product.name)}</div><div class="quote-item-detail"><span class="product-category">${escapeHtml(product.category)}</span><h3>${escapeHtml(product.name)}</h3><button class="remove-quote" type="button" data-remove="${escapeHtml(product.slug)}">${icon("trash")} Remove</button></div><label class="quantity-control">Quantity<input type="number" min="1" step="1" value="${item.quantity}" data-quantity="${escapeHtml(product.slug)}" aria-label="${escapeHtml(product.name)} quantity"></label></article>`;
+              return `<article class="quote-item"><div class="quote-item-image">${imageTag(product.image, product.name)}</div><div class="quote-item-detail"><span class="product-category">${escapeHtml(product.category)}</span><h3>${escapeHtml(product.name)}</h3><button class="remove-quote" type="button" data-remove="${escapeHtml(product.slug)}">${icon("trash")} Remove</button></div><label class="quantity-control">Quantity<input type="number" min="1" max="100000000" step="1" value="${item.quantity}" data-quantity="${escapeHtml(product.slug)}" aria-label="${escapeHtml(product.name)} quantity"></label></article>`;
             }).join("")}</div><button type="button" class="clear-quote" data-action="clear-quote">${icon("trash")} Clear enquiry</button>`
             : `<div class="quote-empty"><span class="quote-empty-icon">${icon("box")}</span><h3>Your enquiry is ready to take shape.</h3><p>Add one or more products and note your quantities. Your selection is saved on this browser as you work.</p><a class="button button-dark" href="products.html">Explore steel products ${icon("arrowUp")}</a></div>`}
         </div>
@@ -528,14 +531,16 @@ function quotePage(products) {
           <div class="summary-count"><span>Product groups</span><strong>${quote.length}</strong></div><div class="summary-count"><span>Total quantity requested</span><strong>${quoteQuantity()}</strong></div>
           <a class="button button-accent button-summary${quote.length ? "" : " is-disabled"}" ${quote.length ? 'href="#quote-details"' : 'href="products.html"'}>${quote.length ? "Continue with this enquiry" : "Choose a product"} ${icon("arrowUp")}</a>
           <span class="summary-secure">${icon("shield")} No payment or account required</span>
-          <a class="summary-email" href="mailto:${companyEmail}">${icon("mail")} Prefer email? ${companyEmail}</a>
+          <a class="summary-email" href="contact.html">${icon("mail")} Prefer to send a message? Contact us</a>
         </aside>
       </div>
-      ${quote.length ? `<div class="container"><div class="quote-details-panel" id="quote-details"><form class="quote-form" id="quote-form"><div class="quote-form-heading">${eyebrow("ALMOST THERE")}<h2>Where should we get back to you?</h2><p>Add your contact details and optional project information. We’ll prepare the enquiry for you to email to our team.</p></div>
+      ${quote.length ? `<div class="container"><div class="quote-details-panel" id="quote-details"><form class="quote-form" id="quote-form"><div class="quote-form-heading">${eyebrow("ALMOST THERE")}<h2>Where should we get back to you?</h2><p>Add your contact details and optional project information. We’ll securely save your enquiry to our database so our team can respond.</p></div>
         <label for="quote-name">Your name <span aria-hidden="true">*</span><input id="quote-name" name="name" autocomplete="name" required placeholder="Your full name"></label>
         <div class="form-row"><label for="quote-email">Work email <span aria-hidden="true">*</span><input id="quote-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com"></label><label for="quote-phone">Phone <span class="optional-label">(optional)</span><input id="quote-phone" name="phone" type="tel" autocomplete="tel" placeholder="+971"></label></div>
         <label for="quote-project">Project or delivery details <span class="optional-label">(optional)</span><textarea id="quote-project" name="project" rows="4" placeholder="Project location, preferred delivery date, grade or other specifications."></textarea></label>
-        <button type="submit" class="button button-dark">Prepare your product enquiry ${icon("arrowUp")}</button><p class="form-privacy">This site has no quotation backend. Your enquiry opens as an email addressed to ${companyEmail} for you to review and send.</p><p class="form-feedback" id="quote-feedback" aria-live="polite"></p>
+        <label class="honeypot-control" aria-hidden="true">Leave this field blank<input name="website_url" type="text" tabindex="-1" autocomplete="off"></label>
+        <div class="consent-row"><label class="consent-control"><input name="consent" type="checkbox" required><span>I agree that Core Metal may use my details to respond to this quotation enquiry.</span></label><a class="consent-privacy" href="privacy.html">Privacy details</a></div>
+        <button type="submit" class="button button-dark">Send product enquiry ${icon("arrowUp")}</button><p class="form-privacy">Your enquiry and selected products are securely sent to Core Metal’s enquiry database.</p><p class="form-feedback" id="quote-feedback" aria-live="polite"></p>
       </form></div></div>` : ""}
     </section>
   `;
@@ -550,11 +555,12 @@ function privacyPage() {
     })}
     <section class="section privacy-section"><div class="container privacy-copy">
       <p class="privacy-updated">Website privacy information · ${new Date().toLocaleDateString("en-GB", {month: "long", year: "numeric"})}</p>
-      <h2>Information you choose to send</h2><p>If you choose to prepare a contact or product enquiry, the information you enter is put into an email on your own device. You review that message and choose whether to send it to Core Metal. This website does not submit enquiries to a form-processing service.</p>
-      <h2>Product enquiries saved on this browser</h2><p>If you add products to your enquiry list, this website saves your selection and quantities in your browser’s local storage to help you continue preparing your enquiry. Your saved selection stays in this browser until you clear it or clear this site’s browser data.</p>
-      <h2>Third-party services and media</h2><p>The website’s product photographs, logo and design assets are stored locally alongside the website code. Browsing the site does not require a third-party image host, external font service, analytics tool or embedded map.</p>
-      <h2>Your choices</h2><p>You can remove products from your enquiry list, clear the list, or delete this website’s stored data through your browser settings. If you have questions about an enquiry you sent, please email <a href="mailto:${companyEmail}">${companyEmail}</a>.</p>
-      <p class="privacy-disclaimer">This page describes the features of this website redesign. For Core Metal’s official privacy practices or information about an enquiry sent by email, contact the company directly.</p>
+      <h2>Information you choose to send</h2><p>When you submit a contact or product enquiry, your name, contact details and message are sent to Core Metal through a protected Supabase Edge Function and stored in the company’s Supabase enquiry database so the team can respond. Product enquiries also include your selected products and quantities. We ask for your consent before you send an enquiry.</p>
+      <h2>Products saved on your device</h2><p>While preparing a product enquiry, your selected products and quantities are saved in your browser’s local storage. This allows you to continue the enquiry after navigating to another page. The website sends these selections to Core Metal only when you submit the completed enquiry. Your saved selection stays in this browser until you clear it or clear this site’s browser data.</p>
+      <h2>Keeping your details private</h2><p>The enquiry database is not publicly readable: the website cannot browse or download enquiries, and its public pages do not contain a Supabase service-role key or database credential. The enquiry function uses an allowlist of website origins, validates submissions, limits repeat submissions by a one-way, secret-keyed network-address hash, and does not store the original address.</p>
+      <h2>Third-party services and media</h2><p>Product photographs, the logo and design assets are stored locally alongside the website code. When you submit an enquiry, your browser connects to Core Metal’s Supabase-hosted enquiry function. Viewing pages or products does not require a third-party image host, external font service, analytics tool or embedded map.</p>
+      <h2>Your choices and questions</h2><p>You can remove products from your enquiry list or clear the list in your browser. To ask about an enquiry you have submitted, or request its deletion, use our <a href="contact.html?subject=Privacy%20or%20data%20request">contact form</a> or call +971 6 5013 111. Submission consent covers the handling of information necessary to respond to your enquiry.</p>
+      <p class="privacy-disclaimer">This notice describes how the enquiry and product-quote features of this website work. For questions about the retention or handling of your enquiry, contact Core Metal directly.</p>
     </div></section>
   `;
 }
@@ -579,17 +585,91 @@ function addToQuote(slug) {
   showNotice("Added to your enquiry list.");
 }
 
-function prepareEmail(event, formId, feedbackId, subjectLine, buildBody) {
+async function submitEnquiry(event, formId, feedbackId, buildRequest) {
   event.preventDefault();
   const form = document.getElementById(formId);
   if (!form.reportValidity()) return;
 
-  const formData = new FormData(form);
-  const body = buildBody(formData);
-  const href = `mailto:${companyEmail}?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(body)}`;
+  const submitButton = form.querySelector('button[type="submit"]');
   const feedback = document.getElementById(feedbackId);
-  feedback.textContent = "Your email program should open with your enquiry ready to review and send. If it doesn’t open, write to mail@coremetal.net.";
-  window.location.assign(href);
+  if (!submissionEndpoint) {
+    feedback.textContent = `Online enquiry storage hasn’t been configured yet. Your enquiry has not been sent. Please call ${companyPhone.replace(/^(\+\d{3})(\d)/, "$1 $2")} to get in touch.`;
+    return;
+  }
+
+  const formData = new FormData(form);
+  const request = buildRequest(formData);
+  if (String(formData.get("website_url") || "").trim()) {
+    form.reset();
+    feedback.textContent = "Thank you. Your enquiry has been received.";
+    return;
+  }
+
+  submitButton.disabled = true;
+  feedback.classList.remove("is-error");
+  feedback.textContent = "Sending your enquiry securely…";
+  try {
+    const response = await fetch(submissionEndpoint, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(request),
+      credentials: "omit",
+      referrerPolicy: "strict-origin-when-cross-origin",
+      signal: AbortSignal.timeout(20000),
+    });
+    let result;
+    try {
+      result = await response.json();
+    } catch {
+      throw new Error("The enquiry service returned an unexpected response. Your enquiry has not been sent.");
+    }
+    if (!response.ok || result.success !== true) {
+      throw new Error(
+        typeof result.error === "string"
+          ? result.error
+          : "The enquiry service couldn't save your message. Your enquiry has not been sent.",
+      );
+    }
+
+    const reference = typeof result.reference === "string"
+      ? ` Your reference is ${result.reference}.`
+      : "";
+    feedback.textContent = `Thank you. Your enquiry has been saved securely.${reference} Our team will be in touch.`;
+    if (typeof result.reference === "string") {
+      const successHeading = document.createElement("span");
+      successHeading.className = "form-reference";
+      successHeading.textContent = `Reference: ${result.reference}`;
+      feedback.append(successHeading);
+    }
+    if (formId === "quote-form") {
+      quote = [];
+      saveQuote();
+      updateNavigationCount();
+      document.querySelector(".quote-items-panel").innerHTML = `
+        <div class="quote-confirmation">
+          <span class="quote-empty-icon">${icon("check")}</span>
+          <h2>Thank you. Your enquiry is with our team.</h2>
+          <p>Your product request has been securely recorded. Our team will be in touch to discuss your requirements.</p>
+          <a class="button button-dark" href="products.html">Continue browsing products ${icon("arrowUp")}</a>
+        </div>`;
+      document.querySelectorAll(".summary-count").forEach((row, index) => {
+        const value = row.querySelector("strong");
+        if (value) value.textContent = "0";
+        if (index === 0) row.querySelector("span").textContent = "Product groups";
+        if (index === 1) row.querySelector("span").textContent = "Total quantity requested";
+      });
+    } else {
+      form.reset();
+    }
+  } catch (error) {
+    console.error("Core Metal enquiry submission failed:", error);
+    feedback.classList.add("is-error");
+    feedback.textContent = error instanceof DOMException && error.name === "TimeoutError"
+      ? "The enquiry service timed out. Your enquiry has not been confirmed or saved. Please try again, or call our team."
+      : `${error.message || "We couldn't save your enquiry."} If the problem continues, please call our team.`;
+  } finally {
+    submitButton.disabled = false;
+  }
 }
 
 function renderProductResults(products) {
@@ -609,6 +689,14 @@ function renderProductResults(products) {
 }
 
 function attachInteractions(products) {
+  if (page === "contact") {
+    const subject = new URLSearchParams(window.location.search).get("subject");
+    const field = document.querySelector("#contact-subject");
+    if (field && (subject === "Careers" || subject === "Privacy or data request")) {
+      field.value = subject;
+    }
+  }
+
   document.querySelector(".menu-toggle")?.addEventListener("click", event => {
     const button = event.currentTarget;
     const expanded = button.getAttribute("aria-expanded") === "true";
@@ -658,12 +746,15 @@ function attachInteractions(products) {
   document.querySelector("#product-search")?.addEventListener("input", () => {
     renderProductResults(products);
   });
+  document.querySelector(".catalog-search")?.addEventListener("submit", event => {
+    event.preventDefault();
+  });
 
   document.addEventListener("change", event => {
     const input = event.target.closest("[data-quantity]");
     if (!input) return;
-    const quantity = Number.parseInt(input.value, 10);
-    if (!Number.isInteger(quantity) || quantity < 1) {
+    const quantity = Number(input.value);
+    if (!Number.isSafeInteger(quantity) || quantity < 1 || quantity > 100000000) {
       input.reportValidity();
       return;
     }
@@ -679,33 +770,43 @@ function attachInteractions(products) {
   });
 
   document.querySelector("#contact-form")?.addEventListener("submit", event => {
-    prepareEmail(event, "contact-form", "contact-feedback", "Product enquiry — Core Metal", data => [
-      `Name: ${data.get("name")}`,
-      `Email: ${data.get("email")}`,
-      `Phone: ${data.get("phone") || "Not provided"}`,
-      `Enquiry type: ${data.get("subject")}`,
-      "",
-      String(data.get("message")),
-    ].join("\n"));
+    void submitEnquiry(event, "contact-form", "contact-feedback", data => ({
+      request_type: "contact",
+      name: data.get("name"),
+      email: data.get("email"),
+      phone: data.get("phone") || null,
+      subject: data.get("subject"),
+      message: data.get("message"),
+      project_details: null,
+      items: [],
+      consent: data.get("consent") === "on",
+      website_url: data.get("website_url"),
+    }));
   });
 
   document.querySelector("#quote-form")?.addEventListener("submit", event => {
-    prepareEmail(event, "quote-form", "quote-feedback", "Quotation enquiry — Core Metal", data => {
-      const requestedProducts = quote.map(item => {
+    void submitEnquiry(event, "quote-form", "quote-feedback", data => ({
+      request_type: "quote",
+      name: data.get("name"),
+      email: data.get("email"),
+      phone: data.get("phone") || null,
+      subject: "Product quotation enquiry",
+      message: data.get("project") || "Product quotation request.",
+      project_details: data.get("project") || null,
+      items: quote.map(item => {
         const product = products.find(entry => entry.slug === item.slug);
-        return product ? `• ${product.name} — Quantity: ${item.quantity}` : "";
-      }).filter(Boolean);
-      return [
-        `Name: ${data.get("name")}`,
-        `Email: ${data.get("email")}`,
-        `Phone: ${data.get("phone") || "Not provided"}`,
-        "",
-        "Products requested:",
-        ...requestedProducts,
-        "",
-        `Project / delivery details: ${data.get("project") || "Not provided"}`,
-      ].join("\n");
-    });
+        return product
+          ? {
+            slug: item.slug,
+            name: product.name,
+            category: product.category,
+            quantity: item.quantity,
+          }
+          : null;
+      }).filter(Boolean),
+      consent: data.get("consent") === "on",
+      website_url: data.get("website_url"),
+    }));
   });
 }
 

@@ -2128,6 +2128,71 @@ img {
   line-height: 1.6;
 }
 
+.honeypot-control {
+  position: absolute !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  clip-path: inset(50%) !important;
+}
+
+.consent-control {
+  display: flex !important;
+  grid-template-columns: 16px 1fr;
+  align-items: flex-start;
+  gap: 9px !important;
+  color: #697065 !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  line-height: 1.7;
+}
+
+.consent-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 9px;
+}
+
+.consent-control > input {
+  width: 15px !important;
+  min-height: 15px !important;
+  flex: 0 0 auto;
+  margin: 2px 0 0;
+  accent-color: var(--green);
+}
+
+.consent-control > span {
+  color: #697065 !important;
+  font-size: 10px;
+}
+
+.consent-privacy {
+  color: #385d45;
+  font-size: 10px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.form-feedback.is-error {
+  color: #9c493a;
+}
+
+.form-feedback .form-reference {
+  display: inline-block;
+  margin-left: 8px;
+  color: #536a4c;
+  font-weight: 650;
+}
+
+.contact-form .button:disabled,
+.quote-form .button:disabled {
+  cursor: progress;
+  opacity: .65;
+}
+
 .form-feedback {
   margin: 0;
   color: #46684c;
@@ -2203,6 +2268,30 @@ img {
 .quote-empty p {
   max-width: 350px;
   margin: 0 0 15px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+.quote-confirmation {
+  display: grid;
+  min-height: 254px;
+  justify-items: center;
+  align-content: center;
+  padding: 17px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.quote-confirmation h2 {
+  margin: 13px 0 4px;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.quote-confirmation > p {
+  max-width: 360px;
   color: var(--muted);
   font-size: 10px;
   line-height: 1.8;

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    runtime: static
+    name: coremetal-website
+    buildCommand: node scripts/build-static-site.mjs
+    staticPublishPath: dist
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self' https://*.supabase.co; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'"
+    envVars:
+      - key: COREMETAL_SUPABASE_FUNCTION_URL
+        value: https://fjdshfvngnlssdhtfgoq.supabase.co/functions/v1/submit-enquiry

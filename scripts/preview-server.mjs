@@ -4,7 +4,8 @@ import {createServer} from "node:http";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const repository = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const root = path.resolve(repository, process.env.SITE_DIRECTORY || ".");
 const port = Number(process.env.PORT || 4173);
 const contentTypes = new Map([
   [".css", "text/css; charset=utf-8"],
