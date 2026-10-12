@@ -5,6 +5,7 @@ import {fileURLToPath} from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const output = path.join(root, "dist");
 const supabaseFunctionUrl = process.env.COREMETAL_SUPABASE_FUNCTION_URL?.trim() ?? "";
+const dashboardFunctionUrl = process.env.COREMETAL_DASHBOARD_FUNCTION_URL?.trim() ?? "";
 const pages = [
   "index.html",
   "about.html",
@@ -16,6 +17,7 @@ const pages = [
   "contact.html",
   "quote.html",
   "privacy.html",
+  "staff.html",
 ];
 
 function validateFunctionUrl(value) {
@@ -47,8 +49,38 @@ function validateFunctionUrl(value) {
   }
 }
 
+function validateDashboardFunctionUrl(value) {
+  if (!value) {
+    throw new Error(
+      "Set COREMETAL_DASHBOARD_FUNCTION_URL in the Render Static Site build environment. "
+      + "Use your Supabase project URL followed by /functions/v1/coremetal-dashboard.",
+    );
+  }
+
+  let parsed;
+  try {
+    parsed = new URL(value);
+  } catch {
+    throw new Error("COREMETAL_DASHBOARD_FUNCTION_URL must be a valid HTTPS URL.");
+  }
+  if (
+    parsed.protocol !== "https:"
+    || !/^[a-z0-9-]+\.supabase\.co$/.test(parsed.hostname)
+    || parsed.port !== ""
+    || parsed.pathname !== "/functions/v1/coremetal-dashboard"
+    || parsed.search
+    || parsed.hash
+  ) {
+    throw new Error(
+      "COREMETAL_DASHBOARD_FUNCTION_URL must look like "
+      + "https://<project-ref>.supabase.co/functions/v1/coremetal-dashboard.",
+    );
+  }
+}
+
 async function main() {
   validateFunctionUrl(supabaseFunctionUrl);
+  validateDashboardFunctionUrl(dashboardFunctionUrl);
   await rm(output, {recursive: true, force: true});
   await mkdir(output, {recursive: true});
 
@@ -57,10 +89,12 @@ async function main() {
   }
   await cp(path.join(root, "styles.css"), path.join(output, "styles.css"));
   await cp(path.join(root, "app.js"), path.join(output, "app.js"));
+  await cp(path.join(root, "staff-dashboard.js"), path.join(output, "staff-dashboard.js"));
   await cp(path.join(root, "assets"), path.join(output, "assets"), {recursive: true});
 
   const config = {
     supabaseFunctionUrl,
+    dashboardFunctionUrl,
   };
   await writeFile(
     path.join(output, "assets", "config.js"),
@@ -106,6 +140,10 @@ async function main() {
       `The local product catalogue or photographs are incomplete `
       + `(${productList.length} products, ${productsWithPhotos} photographs).`,
     );
+  }
+  const dashboardScript = await readFile(path.join(output, "staff-dashboard.js"), "utf8");
+  if (dashboardScript.includes("SUPABASE_SERVICE_ROLE_KEY") || dashboardScript.includes("RATE_LIMIT_SECRET")) {
+    throw new Error("A private database credential was found in the public staff dashboard.");
   }
 
   console.log(

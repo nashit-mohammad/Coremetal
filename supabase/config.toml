@@ -1,2 +1,5 @@
 [functions.submit-enquiry]
 verify_jwt = false
+
+[functions.coremetal-dashboard]
+verify_jwt = false

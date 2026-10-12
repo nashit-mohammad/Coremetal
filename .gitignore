@@ -4,3 +4,4 @@ dist/
 !.env.example
 supabase/.branches/
 supabase/.temp/
+.env.staff-bootstrap

@@ -17,3 +17,5 @@ services:
     envVars:
       - key: COREMETAL_SUPABASE_FUNCTION_URL
         value: https://fjdshfvngnlssdhtfgoq.supabase.co/functions/v1/submit-enquiry
+      - key: COREMETAL_DASHBOARD_FUNCTION_URL
+        value: https://fjdshfvngnlssdhtfgoq.supabase.co/functions/v1/coremetal-dashboard
