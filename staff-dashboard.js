@@ -115,14 +115,8 @@ function commonFrame(content) {
     <header class="staff-header staff-site-header">
       <a class="staff-brand" href="index.html" aria-label="Core Metal website">
         <span class="brand-icon" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span class="brand-name">core<span>metal</span><small>L.L.C. · SHARJAH</small></span>
+        <span class="brand-name">core<span>metal</span><small>STAFF WORKSPACE</small></span>
       </a>
-      <nav class="staff-navigation" aria-label="Main navigation">
-        <a class="staff-nav-link" href="index.html">Home</a>
-        <a class="staff-nav-link" href="products.html">Products</a>
-        <a class="staff-nav-link" href="industries.html">Industries</a>
-        <a class="staff-nav-link" href="contact.html">Contact</a>
-      </nav>
       ${currentUser ? `
         <div class="staff-account">
           <span class="staff-account-email">${escapeHtml(currentUser.email)}</span>

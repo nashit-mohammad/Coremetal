@@ -3541,44 +3541,8 @@ img {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   padding-inline: max(24px, calc((100vw - 1240px) / 2));
+  border-bottom: 2px solid var(--accent);
   background: var(--paper);
-}
-
-.staff-navigation {
-  display: flex;
-  align-items: center;
-  gap: clamp(14px, 1.8vw, 26px);
-}
-
-.staff-nav-link {
-  position: relative;
-  padding-block: 31px;
-  color: #535c52;
-  font-size: 12px;
-  font-weight: 550;
-  transition: color .18s ease;
-}
-
-.staff-nav-link::after {
-  position: absolute;
-  right: 0;
-  bottom: 21px;
-  left: 0;
-  height: 1px;
-  transform: scaleX(0);
-  transform-origin: right;
-  background: var(--accent-dark);
-  content: "";
-  transition: transform .2s ease;
-}
-
-.staff-nav-link:hover {
-  color: var(--green);
-}
-
-.staff-nav-link:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
 }
 
 .staff-brand {
@@ -3593,6 +3557,7 @@ img {
 
 .staff-brand .brand-name small {
   letter-spacing: .16em;
+  color: var(--accent-dark);
 }
 
 .staff-account {
@@ -4331,25 +4296,6 @@ img {
 
   .staff-brand .brand-name small {
     font-size: 7px;
-  }
-
-  .staff-navigation {
-    order: 3;
-    width: 100%;
-    justify-content: space-between;
-    gap: 10px;
-    overflow-x: auto;
-    border-top: 1px solid var(--line);
-  }
-
-  .staff-nav-link {
-    flex: 0 0 auto;
-    padding-block: 13px;
-    font-size: 11px;
-  }
-
-  .staff-nav-link::after {
-    bottom: 8px;
   }
 
   .staff-account {
