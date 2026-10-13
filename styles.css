@@ -355,6 +355,79 @@ img {
   opacity: 1;
 }
 
+.floating-quote-cart[hidden] {
+  display: none;
+}
+
+.floating-quote-cart {
+  position: fixed;
+  z-index: 48;
+  right: 22px;
+  bottom: 78px;
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border: 1px solid #d9b779;
+  border-radius: 50%;
+  background: var(--green-dark);
+  box-shadow: 0 8px 24px rgb(19 40 32 / 22%);
+  color: var(--white);
+  transition: transform .18s, box-shadow .18s;
+}
+
+.floating-quote-cart:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgb(19 40 32 / 27%);
+}
+
+.floating-quote-cart:focus-visible {
+  outline: 3px solid #e7b36b;
+  outline-offset: 3px;
+}
+
+.floating-quote-cart > .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.floating-quote-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: grid;
+  min-width: 21px;
+  height: 21px;
+  padding-inline: 5px;
+  place-items: center;
+  border: 2px solid var(--white);
+  border-radius: 12px;
+  background: #e7b36b;
+  color: var(--green-dark);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.floating-quote-cart.is-bumped {
+  animation: quote-cart-bump .5s cubic-bezier(.2, .8, .2, 1);
+}
+
+@keyframes quote-cart-bump {
+  0% { transform: scale(1); }
+  42% { transform: scale(1.17) rotate(-7deg); }
+  72% { transform: scale(.94) rotate(3deg); }
+  100% { transform: scale(1); }
+}
+
+.add-to-quote.is-added {
+  animation: quote-add-flash .5s ease;
+}
+
+@keyframes quote-add-flash {
+  0%, 100% { transform: scale(1); }
+  45% { transform: scale(1.06); color: #8b5e2d; }
+}
+
 .hero {
   position: relative;
   overflow: hidden;
@@ -3822,6 +3895,45 @@ img {
   background: var(--white);
   color: var(--ink);
   font-size: 11px;
+}
+
+.staff-status-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.staff-status-actions select {
+  min-width: 0;
+  flex: 1;
+}
+
+.staff-status-save {
+  min-height: 37px;
+  padding: 6px 12px;
+  border: 1px solid #234c3d;
+  border-radius: 3px;
+  background: #17392f;
+  color: #fff;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.staff-status-save:disabled {
+  border-color: #dcded4;
+  background: #f4f3ee;
+  color: #7c8178;
+  cursor: default;
+}
+
+.staff-status-save:not(:disabled):hover {
+  background: #245345;
+}
+
+.staff-status-save:focus-visible {
+  outline: 2px solid #668178;
+  outline-offset: 2px;
 }
 
 .staff-enquiry-body {

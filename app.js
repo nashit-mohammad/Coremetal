@@ -18,6 +18,7 @@ const iconPaths = {
   box: '<path d="m12 3 9 5v8l-9 5-9-5V8l9-5Zm0 9 9-4M12 12v9m0-9L3 8m4-1 10 10"/>',
   briefcase: '<rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m-13 5h18m-11 0v2h4v-2"/>',
   building: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 21v-4h6v4m-7-12h.01M12 9h.01M15 9h.01M9 13h.01M12 13h.01M15 13h.01"/>',
+  cart: '<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>',
   globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18m-9-9a15 15 0 0 1 0 18m0-18a15 15 0 0 0 0 18"/>',
   layers: '<path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5m-18 5 9 5 9-5"/>',
   mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
@@ -120,6 +121,10 @@ function header() {
       </div>
     </header>
     <div id="site-notice" class="site-notice" role="status" aria-live="polite"></div>
+    <a id="floating-quote-cart" class="floating-quote-cart" href="quote.html" aria-label="View your enquiry, ${quoteQuantity()} ${quoteQuantity() === 1 ? "product" : "products"}"${quoteQuantity() ? "" : " hidden"}>
+      ${icon("cart")}
+      <span class="floating-quote-count" aria-hidden="true">${quoteQuantity()}</span>
+    </a>
   `;
 }
 
@@ -566,15 +571,29 @@ function privacyPage() {
   `;
 }
 
-function updateNavigationCount() {
+function updateNavigationCount(animate = false) {
+  const quantity = quoteQuantity();
   const badge = document.querySelector(".quote-badge");
   if (badge) {
-    badge.textContent = quoteQuantity();
-    badge.setAttribute("aria-label", `${quoteQuantity()} items`);
+    badge.textContent = quantity;
+    badge.setAttribute("aria-label", `${quantity} items`);
+  }
+  const floatingCart = document.querySelector("#floating-quote-cart");
+  if (floatingCart) {
+    floatingCart.hidden = quantity === 0;
+    floatingCart.setAttribute("aria-label", `View your enquiry, ${quantity} ${quantity === 1 ? "product" : "products"}`);
+    const floatingCount = floatingCart.querySelector(".floating-quote-count");
+    if (floatingCount) floatingCount.textContent = quantity;
+    if (animate && quantity > 0) {
+      floatingCart.classList.remove("is-bumped");
+      void floatingCart.offsetWidth;
+      floatingCart.classList.add("is-bumped");
+      window.setTimeout(() => floatingCart.classList.remove("is-bumped"), 550);
+    }
   }
 }
 
-function addToQuote(slug) {
+function addToQuote(slug, trigger) {
   const existing = quote.find(item => item.slug === slug);
   if (existing) {
     existing.quantity += 1;
@@ -582,7 +601,13 @@ function addToQuote(slug) {
     quote.push({slug, quantity: 1});
   }
   saveQuote();
-  updateNavigationCount();
+  updateNavigationCount(true);
+  if (trigger) {
+    trigger.classList.remove("is-added");
+    void trigger.offsetWidth;
+    trigger.classList.add("is-added");
+    window.setTimeout(() => trigger.classList.remove("is-added"), 550);
+  }
   showNotice("Added to your enquiry list.");
 }
 
@@ -709,7 +734,7 @@ function attachInteractions(products) {
   document.addEventListener("click", event => {
     const addButton = event.target.closest(".add-to-quote");
     if (addButton) {
-      addToQuote(addButton.dataset.product);
+      addToQuote(addButton.dataset.product, addButton);
       return;
     }
 
@@ -724,7 +749,7 @@ function attachInteractions(products) {
     const quickQuote = event.target.closest("[data-quick-quote]");
     if (quickQuote) {
       event.preventDefault();
-      addToQuote(quickQuote.dataset.quickQuote);
+      addToQuote(quickQuote.dataset.quickQuote, quickQuote);
       window.location.assign("quote.html");
       return;
     }

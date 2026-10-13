@@ -7,6 +7,7 @@ let enquiries = [];
 let staffUsers = [];
 let statusFilter = "all";
 let searchTerm = "";
+const statusDrafts = new Map();
 
 function escapeHtml(value = "") {
   return String(value).replace(/[&<>"']/g, character => ({
@@ -283,6 +284,7 @@ function statusBadge(status) {
 }
 
 function enquiryCard(enquiry) {
+  const selectedStatus = statusDrafts.get(enquiry.id) ?? enquiry.status;
   const items = Array.isArray(enquiry.items) ? enquiry.items : [];
   const itemList = items.length
     ? `<ul class="staff-product-list">${items.map(item => `
@@ -305,10 +307,13 @@ function enquiryCard(enquiry) {
           <span class="staff-date">${formatDate(enquiry.created_at)}</span>
         </div>
         <label class="staff-status-control"><span>Status</span>
-          <select data-action="update-status" aria-label="Update status for ${escapeHtml(enquiry.subject)}">
-            ${[["open", "Open"], ["contacted", "Contacted"], ["closed", "Closed"]].map(([value, label]) =>
-              `<option value="${value}"${enquiry.status === value ? " selected" : ""}>${label}</option>`).join("")}
-          </select>
+          <span class="staff-status-actions">
+            <select data-action="update-status" aria-label="Update status for ${escapeHtml(enquiry.subject)}">
+              ${[["open", "Open"], ["contacted", "Contacted"], ["closed", "Closed"]].map(([value, label]) =>
+                `<option value="${value}"${selectedStatus === value ? " selected" : ""}>${label}</option>`).join("")}
+            </select>
+            <button class="staff-status-save" type="button" data-action="save-status" aria-label="Save status for ${escapeHtml(enquiry.subject)}"${selectedStatus === enquiry.status ? " disabled" : ""}>Save status</button>
+          </span>
         </label>
       </div>
       <div class="staff-enquiry-body">
@@ -448,7 +453,18 @@ function enquiryView() {
     });
   });
   document.querySelectorAll('[data-action="update-status"]').forEach(select => {
-    select.addEventListener("change", updateStatus);
+    select.addEventListener("change", event => {
+      const card = event.currentTarget.closest("[data-enquiry-id]");
+      const enquiry = enquiries.find(item => item.id === card?.dataset.enquiryId);
+      if (!enquiry) return;
+      if (event.currentTarget.value === enquiry.status) statusDrafts.delete(enquiry.id);
+      else statusDrafts.set(enquiry.id, event.currentTarget.value);
+      const saveButton = card.querySelector('[data-action="save-status"]');
+      if (saveButton) saveButton.disabled = !statusDrafts.has(enquiry.id);
+    });
+  });
+  document.querySelectorAll('[data-action="save-status"]').forEach(button => {
+    button.addEventListener("click", updateStatus);
   });
   document.querySelector("#staff-create-user-form")?.addEventListener("submit", createUser);
   enhanceInitialPasswordField();
@@ -469,11 +485,11 @@ function usersPanel() {
       </div>
       <form id="staff-create-user-form" class="staff-create-user staff-form" novalidate>
         <label>Email address<input name="email" type="email" autocomplete="off" maxlength="254" required></label>
-        <label>Initial password<input name="password" type="password" autocomplete="new-password" minlength="14" maxlength="72" required><span>14–72 characters</span></label>
+        <label>Initial password<input name="password" type="password" autocomplete="new-password" minlength="14" maxlength="72" required></label>
         <label>Access level<select name="role"><option value="staff">Staff</option><option value="admin">Administrator</option></select></label>
         <button class="button button-dark" type="submit">Create account</button>
       </form>
-      <p class="staff-management-note">Share initial passwords securely. New accounts must change their password at first sign-in.</p>
+      <p class="staff-management-note">Passwords must be 14–72 characters. Share initial passwords securely; new accounts must change them at first sign-in.</p>
       <div class="staff-user-list">
         ${staffUsers.map(user => `
           <article class="staff-user-row">
@@ -512,22 +528,29 @@ async function loadWorkspace() {
 
 async function updateStatus(event) {
   clearMessage();
-  const select = event.currentTarget;
-  const card = select.closest("[data-enquiry-id]");
-  if (!card || !validStatuses.has(select.value)) return;
-  const previous = enquiries.find(item => item.id === card.dataset.enquiryId)?.status;
+  const button = event.currentTarget;
+  const card = button.closest("[data-enquiry-id]");
+  const select = card?.querySelector('[data-action="update-status"]');
+  if (!card || !select || !validStatuses.has(select.value)) return;
+  const enquiryId = card.dataset.enquiryId;
+  const previous = enquiries.find(item => item.id === enquiryId)?.status;
+  if (!previous || select.value === previous) return;
+  button.disabled = true;
+  button.textContent = "Saving…";
   select.disabled = true;
   try {
     const result = await request("update-status", {
-      enquiryId: card.dataset.enquiryId,
+      enquiryId,
       status: select.value,
     });
+    statusDrafts.delete(enquiryId);
     enquiries = enquiries.map(item => item.id === result.enquiry.id ? result.enquiry : item);
     enquiryView();
     showMessage("Enquiry status updated.", "success");
   } catch (error) {
     showMessage(error.message);
-    select.value = previous ?? "open";
+    button.textContent = "Save status";
+    button.disabled = false;
     select.disabled = false;
   }
 }
