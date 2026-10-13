@@ -91,6 +91,20 @@ function quoteQuantity() {
   return quote.reduce((total, item) => total + item.quantity, 0);
 }
 
+function preserveViewport(update) {
+  const left = window.scrollX;
+  const top = window.scrollY;
+  const root = document.documentElement;
+  const previousBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
+  try {
+    update();
+    window.scrollTo(left, top);
+  } finally {
+    root.style.scrollBehavior = previousBehavior;
+  }
+}
+
 function header() {
   const links = pages.map(link => `
     <a class="nav-link${page === link.id ? " is-current" : ""}"${page === link.id ? ' aria-current="page"' : ""} href="${link.href}">${link.label}</a>
@@ -552,6 +566,21 @@ function quotePage(products) {
   `;
 }
 
+function updateQuoteSummary() {
+  const counts = document.querySelectorAll(".summary-count strong");
+  if (counts[0]) counts[0].textContent = quote.length;
+  if (counts[1]) counts[1].textContent = quoteQuantity();
+}
+
+function renderQuotePage(products) {
+  const main = document.querySelector("#main");
+  if (!main) return;
+  preserveViewport(() => {
+    main.innerHTML = quotePage(products);
+  });
+  updateNavigationCount();
+}
+
 function privacyPage() {
   return `
     ${banner({
@@ -711,7 +740,9 @@ function renderProductResults(products) {
   const result = document.querySelector("#catalog-result");
   const grid = document.querySelector("#product-results");
   if (result) result.textContent = `${filtered.length} ${filtered.length === 1 ? "product" : "products"}`;
-  if (grid) grid.innerHTML = productGrid(filtered);
+  if (grid) preserveViewport(() => {
+    grid.innerHTML = productGrid(filtered);
+  });
 }
 
 function attachInteractions(products) {
@@ -756,16 +787,31 @@ function attachInteractions(products) {
 
     const removeButton = event.target.closest("[data-remove]");
     if (removeButton) {
+      const removedCard = removeButton.closest(".quote-item");
+      const cardsBeforeRemoval = [...document.querySelectorAll(".quote-item")];
+      const removedIndex = cardsBeforeRemoval.indexOf(removedCard);
       quote = quote.filter(item => item.slug !== removeButton.dataset.remove);
       saveQuote();
-      window.location.reload();
+      if (quote.length === 0) {
+        renderQuotePage(products);
+        document.querySelector(".quote-empty .button")?.focus({preventScroll: true});
+      } else {
+        removedCard?.remove();
+        updateQuoteSummary();
+        updateNavigationCount();
+        const nextCard = cardsBeforeRemoval[removedIndex + 1] ?? cardsBeforeRemoval[removedIndex - 1];
+        const nextRemove = nextCard?.querySelector("[data-remove]");
+        nextRemove?.focus({preventScroll: true});
+        showNotice("Product removed from your enquiry.");
+      }
       return;
     }
 
     if (event.target.closest("[data-action='clear-quote']")) {
       quote = [];
       saveQuote();
-      window.location.reload();
+      renderQuotePage(products);
+      document.querySelector(".quote-empty .button")?.focus({preventScroll: true});
     }
   });
 
@@ -787,12 +833,14 @@ function attachInteractions(products) {
     const item = quote.find(entry => entry.slug === input.dataset.quantity);
     if (!item) {
       showNotice("This product is no longer in your enquiry. Please add it again.");
-      window.location.reload();
       return;
     }
+    if (item.quantity === quantity) return;
     item.quantity = quantity;
     saveQuote();
-    window.location.reload();
+    updateNavigationCount();
+    updateQuoteSummary();
+    showNotice("Quantity updated.");
   });
 
   document.querySelector("#contact-form")?.addEventListener("submit", event => {

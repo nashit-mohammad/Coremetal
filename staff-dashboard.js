@@ -41,6 +41,14 @@ function clearMessage() {
   if (notice) notice.className = "staff-notice";
 }
 
+function restoreScrollPosition(left, top) {
+  const root = document.documentElement;
+  const previousBehavior = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto";
+  window.scrollTo(left, top);
+  root.style.scrollBehavior = previousBehavior;
+}
+
 function saveToken(token) {
   try {
     sessionStorage.setItem(tokenStorageKey, token);
@@ -403,6 +411,8 @@ function enhanceInitialPasswordField() {
 }
 
 function enquiryView() {
+  const scrollLeft = window.scrollX;
+  const scrollTop = window.scrollY;
   const openCount = enquiries.filter(item => item.status === "open").length;
   const contactedCount = enquiries.filter(item => item.status === "contacted").length;
   const closedCount = enquiries.filter(item => item.status === "closed").length;
@@ -443,13 +453,14 @@ function enquiryView() {
     const selectionEnd = event.currentTarget.selectionEnd;
     enquiryView();
     const input = document.querySelector("#staff-search");
-    input.focus();
+    input.focus({preventScroll: true});
     input.setSelectionRange(selectionStart, selectionEnd);
   });
   document.querySelectorAll("[data-filter]").forEach(button => {
     button.addEventListener("click", () => {
       statusFilter = button.dataset.filter;
       enquiryView();
+      document.querySelector(`[data-filter="${statusFilter}"]`)?.focus({preventScroll: true});
     });
   });
   document.querySelectorAll('[data-action="update-status"]').forEach(select => {
@@ -474,6 +485,7 @@ function enquiryView() {
   document.querySelectorAll('[data-action="toggle-user"]').forEach(button => {
     button.addEventListener("click", toggleUserAccess);
   });
+  restoreScrollPosition(scrollLeft, scrollTop);
 }
 
 function usersPanel() {
@@ -546,6 +558,11 @@ async function updateStatus(event) {
     statusDrafts.delete(enquiryId);
     enquiries = enquiries.map(item => item.id === result.enquiry.id ? result.enquiry : item);
     enquiryView();
+    document.querySelectorAll("[data-enquiry-id]").forEach(updatedCard => {
+      if (updatedCard.dataset.enquiryId === enquiryId) {
+        updatedCard.querySelector('[data-action="update-status"]')?.focus({preventScroll: true});
+      }
+    });
     showMessage("Enquiry status updated.", "success");
   } catch (error) {
     showMessage(error.message);
