@@ -130,13 +130,13 @@ function header() {
         <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-navigation">${icon("menu")}<span>Menu</span></button>
         <nav class="primary-navigation" id="primary-navigation" aria-label="Main navigation">
           ${links}
-          <a class="quote-nav" href="quote.html">My enquiry <span class="quote-badge" aria-label="${quoteQuantity()} items">${quoteQuantity()}</span></a>
+          <a class="quote-nav" href="quote.html#quote-items">My enquiry <span class="quote-badge" aria-label="${quoteQuantity()} items">${quoteQuantity()}</span></a>
           <a class="nav-link team-login-link" href="staff.html">Team sign in</a>
         </nav>
       </div>
     </header>
     <div id="site-notice" class="site-notice" role="status" aria-live="polite"></div>
-    <a id="floating-quote-cart" class="floating-quote-cart" href="quote.html" aria-label="View your enquiry, ${quoteQuantity()} ${quoteQuantity() === 1 ? "product" : "products"}"${quoteQuantity() ? "" : " hidden"}>
+    <a id="floating-quote-cart" class="floating-quote-cart" href="quote.html#quote-items" aria-label="View your enquiry, ${quoteQuantity()} ${quoteQuantity() === 1 ? "product" : "products"}"${quoteQuantity() ? "" : " hidden"}>
       ${icon("cart")}
       <span class="floating-quote-count" aria-hidden="true">${quoteQuantity()}</span>
     </a>
@@ -538,7 +538,7 @@ function quotePage(products) {
     })}
     <section class="section section-quote">
       <div class="container quote-layout">
-        <div class="quote-items-panel"><div class="quote-panel-heading"><div>${eyebrow("YOUR PRODUCT ENQUIRY")}<h2>What are you looking for?</h2></div><a href="products.html" class="text-action">Add a product ${icon("arrow")}</a></div>
+        <div class="quote-items-panel" id="quote-items"><div class="quote-panel-heading"><div>${eyebrow("YOUR PRODUCT ENQUIRY")}<h2>What are you looking for?</h2></div><a href="products.html" class="text-action">Add a product ${icon("arrow")}</a></div>
           ${quote.length
             ? `<div class="quote-items">${quote.map(item => {
               const product = products.find(entry => entry.slug === item.slug);
@@ -638,6 +638,7 @@ function addToQuote(slug, trigger) {
     window.setTimeout(() => trigger.classList.remove("is-added"), 550);
   }
   showNotice("Added to your enquiry list.");
+  window.location.assign("quote.html#quote-items");
 }
 
 async function submitEnquiry(event, formId, feedbackId, buildRequest) {
@@ -781,7 +782,6 @@ function attachInteractions(products) {
     if (quickQuote) {
       event.preventDefault();
       addToQuote(quickQuote.dataset.quickQuote, quickQuote);
-      window.location.assign("quote.html");
       return;
     }
 
@@ -963,6 +963,12 @@ async function initialise() {
 
   mount.innerHTML = `${header()}<main id="main">${pageContent}</main>${footer()}`;
   attachInteractions(products);
+  if (page === "quote" && window.location.hash === "#quote-items") {
+    requestAnimationFrame(() => document.querySelector("#quote-items")?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+      block: "start",
+    }));
+  }
 }
 
 initialise().catch(error => {
