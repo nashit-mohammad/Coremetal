@@ -3998,6 +3998,22 @@ img {
   cursor: pointer;
 }
 
+.staff-password-entry {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.staff-password-entry input {
+  min-width: 0;
+  flex: 1;
+}
+
+.staff-password-entry .staff-small-button {
+  min-height: 43px;
+}
+
 .staff-management-note {
   margin: 0 0 13px;
   color: #84877d;

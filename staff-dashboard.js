@@ -343,6 +343,60 @@ function filteredEnquiries() {
   });
 }
 
+function generateInitialPassword(length = 20) {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789";
+  const limit = Math.floor(256 / alphabet.length) * alphabet.length;
+  let password = "";
+  while (password.length < length) {
+    const bytes = crypto.getRandomValues(new Uint8Array(length - password.length + 8));
+    for (const byte of bytes) {
+      if (byte < limit) password += alphabet[byte % alphabet.length];
+      if (password.length === length) break;
+    }
+  }
+  return password;
+}
+
+function enhanceInitialPasswordField() {
+  const form = document.querySelector("#staff-create-user-form");
+  const input = form?.querySelector('input[name="password"]');
+  if (!input) return;
+
+  const controls = document.createElement("span");
+  controls.className = "staff-password-entry";
+  if (!input.id) input.id = "staff-create-user-password";
+  input.replaceWith(controls);
+  controls.append(input);
+
+  const generate = document.createElement("button");
+  generate.className = "staff-small-button";
+  generate.type = "button";
+  generate.textContent = "Generate";
+  generate.setAttribute("aria-label", "Generate a secure initial password");
+  generate.addEventListener("click", () => {
+    input.value = generateInitialPassword();
+    input.type = "text";
+    toggle.textContent = "Hide";
+    toggle.setAttribute("aria-pressed", "true");
+    input.focus();
+    input.select();
+  });
+
+  const toggle = document.createElement("button");
+  toggle.className = "staff-small-button";
+  toggle.type = "button";
+  toggle.textContent = "Show";
+  toggle.setAttribute("aria-controls", input.id || "");
+  toggle.setAttribute("aria-pressed", "false");
+  toggle.addEventListener("click", () => {
+    const reveal = input.type === "password";
+    input.type = reveal ? "text" : "password";
+    toggle.textContent = reveal ? "Hide" : "Show";
+    toggle.setAttribute("aria-pressed", String(reveal));
+  });
+  controls.append(generate, toggle);
+}
+
 function enquiryView() {
   const openCount = enquiries.filter(item => item.status === "open").length;
   const contactedCount = enquiries.filter(item => item.status === "contacted").length;
@@ -397,6 +451,7 @@ function enquiryView() {
     select.addEventListener("change", updateStatus);
   });
   document.querySelector("#staff-create-user-form")?.addEventListener("submit", createUser);
+  enhanceInitialPasswordField();
   document.querySelectorAll('[data-action="reset-user"]').forEach(form => {
     form.addEventListener("submit", resetUserPassword);
   });
