@@ -3562,28 +3562,98 @@ img {
 
 .staff-account {
   justify-content: flex-end;
-  gap: 13px;
+  gap: 0;
 }
 
 .staff-account-email,
 .staff-role,
 .staff-public-link {
-  color: var(--ink-soft);
+  position: relative;
+  display: inline-flex;
+  min-height: 82px;
+  align-items: center;
+  color: #535c52;
   font-size: 12px;
+  font-weight: 550;
+  white-space: nowrap;
 }
 
 .staff-role {
-  padding: 4px 9px;
-  border-radius: 20px;
-  background: var(--green-pale);
-  color: var(--green);
+  color: var(--accent-dark);
   font-size: 10px;
   font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.staff-account > * + * {
+  padding-left: clamp(12px, 1.5vw, 22px);
+  border-left: 1px solid #d9d8ce;
+}
+
+.staff-account-password,
+.staff-account .button-outline-staff,
+.staff-public-link {
+  position: relative;
+  transition: color .18s ease;
+}
+
+.staff-account-password::after,
+.staff-account .button-outline-staff::after,
+.staff-public-link::after {
+  position: absolute;
+  right: 0;
+  bottom: 21px;
+  left: 0;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: right;
+  background: var(--accent-dark);
+  content: "";
+  transition: transform .2s ease;
+}
+
+.staff-account-password:hover,
+.staff-account .button-outline-staff:hover,
+.staff-public-link:hover {
+  color: var(--green);
+}
+
+.staff-account-password:hover::after,
+.staff-account-password:focus-visible::after,
+.staff-account .button-outline-staff:hover::after,
+.staff-account .button-outline-staff:focus-visible::after,
+.staff-public-link:hover::after,
+.staff-public-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.staff-account .staff-account-password {
+  min-height: 82px;
+  margin: 0;
+  padding: 0 0 0 clamp(12px, 1.5vw, 22px);
+  border-left: 1px solid #d9d8ce;
+  color: #535c52;
+  font-size: 12px;
+  font-weight: 550;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.staff-account .button-outline-staff {
+  min-height: 82px;
+  padding: 0 0 0 clamp(12px, 1.5vw, 22px);
+  border: 0;
+  border-left: 1px solid #d9d8ce;
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 550;
+  white-space: nowrap;
 }
 
 .staff-public-link {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration: none;
 }
 
 .button-outline-staff {
@@ -4282,6 +4352,8 @@ img {
     order: 2;
     width: 100%;
     justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0;
     padding-bottom: 13px;
   }
 
@@ -4299,9 +4371,23 @@ img {
   }
 
   .staff-account {
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 7px;
+    justify-content: flex-start;
+  }
+
+  .staff-account-email,
+  .staff-role,
+  .staff-account-password,
+  .staff-account .button-outline-staff {
+    min-height: 38px;
+  }
+
+  .staff-account > * + * {
+    padding-left: 8px;
+  }
+
+  .staff-account .staff-account-password,
+  .staff-account .button-outline-staff {
+    padding-left: 8px;
   }
 
   .staff-account-email {
@@ -4420,9 +4506,10 @@ img {
     display: none;
   }
 
-  .staff-account .button {
-    min-height: 35px;
-    padding: 8px 10px;
+  .staff-account .staff-account-password::after,
+  .staff-account .button-outline-staff::after,
+  .staff-public-link::after {
+    bottom: 5px;
   }
 
   .staff-intro h1 {
