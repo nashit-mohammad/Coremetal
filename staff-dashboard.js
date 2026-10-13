@@ -112,11 +112,17 @@ async function request(action, values = {}, {authenticated = true} = {}) {
 
 function commonFrame(content) {
   return `
-    <header class="staff-header">
+    <header class="staff-header staff-site-header">
       <a class="staff-brand" href="index.html" aria-label="Core Metal website">
         <span class="brand-icon" aria-hidden="true"><span></span><span></span><span></span></span>
-        <span class="brand-name">core<span>metal</span><small>STAFF WORKSPACE</small></span>
+        <span class="brand-name">core<span>metal</span><small>L.L.C. · SHARJAH</small></span>
       </a>
+      <nav class="staff-navigation" aria-label="Main navigation">
+        <a class="staff-nav-link" href="index.html">Home</a>
+        <a class="staff-nav-link" href="products.html">Products</a>
+        <a class="staff-nav-link" href="industries.html">Industries</a>
+        <a class="staff-nav-link" href="contact.html">Contact</a>
+      </nav>
       ${currentUser ? `
         <div class="staff-account">
           <span class="staff-account-email">${escapeHtml(currentUser.email)}</span>
@@ -124,7 +130,7 @@ function commonFrame(content) {
           <button class="staff-text-button staff-account-password" type="button" data-action="change-account-password">Change password</button>
           <button class="button button-outline-staff" type="button" data-action="logout">Sign out</button>
         </div>
-      ` : `<a class="staff-public-link" href="index.html">View public website</a>`}
+      ` : `<a class="staff-public-link" href="index.html">View website</a>`}
     </header>
     <div id="staff-notice" class="staff-notice" role="status" aria-live="polite"></div>
     ${content}

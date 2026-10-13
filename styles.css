@@ -3525,6 +3525,51 @@ img {
   border-bottom: 1px solid var(--line);
 }
 
+.staff-site-header {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding-inline: max(24px, calc((100vw - 1240px) / 2));
+  background: var(--paper);
+}
+
+.staff-navigation {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 1.8vw, 26px);
+}
+
+.staff-nav-link {
+  position: relative;
+  padding-block: 31px;
+  color: #535c52;
+  font-size: 12px;
+  font-weight: 550;
+  transition: color .18s ease;
+}
+
+.staff-nav-link::after {
+  position: absolute;
+  right: 0;
+  bottom: 21px;
+  left: 0;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: right;
+  background: var(--accent-dark);
+  content: "";
+  transition: transform .2s ease;
+}
+
+.staff-nav-link:hover {
+  color: var(--green);
+}
+
+.staff-nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
 .staff-brand {
   display: inline-flex;
   align-items: center;
@@ -4246,7 +4291,54 @@ img {
   }
 
   .staff-header {
-    min-height: 74px;
+    min-height: 0;
+    flex-wrap: wrap;
+    padding-block: 15px 0;
+  }
+
+  .staff-site-header {
+    column-gap: 10px;
+    row-gap: 13px;
+    padding-inline: 16px;
+  }
+
+  .staff-account {
+    order: 2;
+    width: 100%;
+    justify-content: flex-start;
+    padding-bottom: 13px;
+  }
+
+  .staff-brand .brand-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .staff-brand .brand-name {
+    font-size: 17px;
+  }
+
+  .staff-brand .brand-name small {
+    font-size: 7px;
+  }
+
+  .staff-navigation {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    overflow-x: auto;
+    border-top: 1px solid var(--line);
+  }
+
+  .staff-nav-link {
+    flex: 0 0 auto;
+    padding-block: 13px;
+    font-size: 11px;
+  }
+
+  .staff-nav-link::after {
+    bottom: 8px;
   }
 
   .staff-account {
@@ -4256,9 +4348,9 @@ img {
   }
 
   .staff-account-email {
-    max-width: 46vw;
+    max-width: 42vw;
     overflow-wrap: anywhere;
-    text-align: right;
+    text-align: left;
   }
 
   .staff-role {
