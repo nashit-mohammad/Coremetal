@@ -301,6 +301,25 @@ img {
   color: var(--white);
 }
 
+.team-login-link {
+  padding-inline: 11px;
+  border: 1px solid #d9d8ce;
+  border-radius: var(--radius);
+  color: var(--green-dark);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.team-login-link::after {
+  display: none;
+}
+
+.team-login-link:hover {
+  border-color: var(--green);
+  background: var(--green);
+  color: var(--white);
+}
+
 .quote-badge {
   display: grid;
   min-width: 19px;
@@ -2756,6 +2775,10 @@ img {
     font-size: 11px;
   }
 
+  .team-login-link {
+    padding-inline: 8px;
+  }
+
   .quote-nav {
     padding-inline: 9px;
     font-size: 10px;
@@ -2855,6 +2878,13 @@ img {
     padding: 12px 5px;
     border-bottom: 1px solid #eceae2;
     font-size: 13px;
+  }
+
+  .team-login-link {
+    align-self: flex-start;
+    margin-top: 10px;
+    padding: 9px 12px;
+    border: 1px solid #d9d8ce;
   }
 
   .nav-link::after {
