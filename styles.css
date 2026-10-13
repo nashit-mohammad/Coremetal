@@ -302,22 +302,22 @@ img {
 }
 
 .team-login-link {
-  padding-inline: 11px;
-  border: 1px solid #d9d8ce;
-  border-radius: var(--radius);
-  color: var(--green-dark);
-  font-weight: 700;
+  margin-left: 4px;
+  padding-left: 17px;
+  color: #80683e;
+  font-weight: 650;
   white-space: nowrap;
 }
 
-.team-login-link::after {
-  display: none;
-}
-
-.team-login-link:hover {
-  border-color: var(--green);
-  background: var(--green);
-  color: var(--white);
+.team-login-link::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 1px;
+  height: 22px;
+  transform: translateY(-50%);
+  background: #d9d8ce;
+  content: "";
 }
 
 .quote-badge {
@@ -2776,7 +2776,8 @@ img {
   }
 
   .team-login-link {
-    padding-inline: 8px;
+    margin-left: 0;
+    padding-left: 13px;
   }
 
   .quote-nav {
@@ -2882,9 +2883,13 @@ img {
 
   .team-login-link {
     align-self: flex-start;
-    margin-top: 10px;
-    padding: 9px 12px;
-    border: 1px solid #d9d8ce;
+    margin-top: 8px;
+    padding: 16px 5px 12px;
+    border-top: 1px solid #d9d8ce;
+  }
+
+  .team-login-link::before {
+    display: none;
   }
 
   .nav-link::after {
